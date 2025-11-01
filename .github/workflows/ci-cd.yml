@@ -31,10 +31,11 @@ jobs:
         curl http://127.0.0.1:5000 || exit 1
 
     - name: Build Docker image
-      run: docker build -t flask-cicd-demo .
+      run: docker build -t ${{ secrets.DOCKER_USERNAME }}/flask-cicd-demo:latest .- name: Build Docker image
+      run: docker build -t ${{ secrets.DOCKER_USERNAME }}/flask-cicd-demo:latest .
 
-    - name: Run Docker container (test)
-      run: |
-        docker run -d -p 5000:5000 flask-cicd-demo
-        sleep 5
-        docker ps
+    - name: Log in to Docker Hub
+      run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+
+    - name: Push Docker image to Docker Hub
+      run: docker push ${{ secrets.DOCKER_USERNAME }}/flask-cicd-demo:latest
