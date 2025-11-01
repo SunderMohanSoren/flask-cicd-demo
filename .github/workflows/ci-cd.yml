@@ -31,7 +31,6 @@ jobs:
         curl http://127.0.0.1:5000 || exit 1
 
     - name: Build Docker image
-      run: docker build -t ${{ secrets.DOCKER_USERNAME }}/flask-cicd-demo:latest .- name: Build Docker image
       run: docker build -t ${{ secrets.DOCKER_USERNAME }}/flask-cicd-demo:latest .
 
     - name: Log in to Docker Hub
